@@ -60,15 +60,29 @@ public class ConverterUtil {
         writeLineByLineIntoFile(stockIntoString, path);
     }
 
+    /**
+     * Converts a list of {@link Stock} objects into a list of JSON strings.
+     * <p>
+     * This method serializes each {@link Stock} object in the provided list into its JSON representation
+     * using the {@link ObjectMapper} with default pretty printing. Each {@link Stock} object is converted
+     * to a JSON string and added to the resulting list.
+     * </p>
+     *
+     * @param stockList the list of {@link Stock} objects to be converted into JSON format
+     * @return a list of strings, where each string is the JSON representation of a {@link Stock} object
+     * @throws JsonProcessingException if an error occurs while converting a {@link Stock} object into JSON
+     */
     public static List<String> convertIntoJSON(List<Stock> stockList) throws JsonProcessingException {
+        log.info("Converting into JSON started...");
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        List<String > jsonStockList = new ArrayList<>();
+        List<String> jsonStockList = new ArrayList<>();
         for (Stock stock : stockList) {
             jsonStockList.add(ow.writeValueAsString(stock));
         }
-
+        log.info("Converting into JSON was successfully executed");
         return jsonStockList;
     }
+
 
     /**
      * Writes a list of string arrays to a CSV file, including the column names.
